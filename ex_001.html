@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>练习 001</title>
+</head>
+<body>
+
+食物卡路里列表:  <input type="button" value="显示列表" onclick="show_list();">
+
+<table border="1" id="foods_list">
+    <thead>
+    <tr>
+        <th></th><th>名称</th><th>单位</th><th>热量</th>
+    </tr>
+    </thead>
+    <tbody id="foods_list_tbody">
+
+
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    function Food(name, count ,calories){
+        var food = {};
+        food.name = name;
+        food.count = count;
+        food.calories = calories;
+        return food;
+    }
+
+    var foods_data;
+    foods_data = [];
+
+    var onefood;
+    onefood = null;
+    onefood= Food("可乐", "100ml", "43");
+    foods_data.push(onefood);
+    onefood = Food("汉堡", "个", "260");
+    foods_data.push(onefood);
+
+
+    console.log(foods_data);
+    
+    var show_list = function(){
+        var foods_list_tbody = document.getElementById("foods_list_tbody");
+        if(foods_list_tbody.hasChildNodes()) {
+            console.log("remove child node.")
+            foods_list_tbody.removeChild(foods_list_tbody.childNodes[0]);
+        }
+
+        //var aText = document.createTextNode("abc");
+        //foods_list_tbody.appendChild(aText);
+
+        for( i=0; i<foods_data.length; i++){
+            var temp_obj = foods_data[i];
+            var temp_text = "<td>"+i+"</td><td>"
+                    +temp_obj.name+"</td><td>"
+                    +temp_obj.count+"</td><td>"
+                    +temp_obj.calories+"</td>";
+            console.log(temp_text);
+            var tr = document.createElement("tr");
+            tr.innerHTML = temp_text;
+            foods_list_tbody.appendChild(tr);
+        }
+    }
+</script>
+
+</body>
+</html>
