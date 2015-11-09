@@ -1,0 +1,115 @@
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<form action="post.php" method="post" name="f1"> 
+<input type="text" name="user"> 
+<input type="password" name="password"> 
+<input type="submit"> 
+</form> 
+
+
+<form action="do.php" method="post" name="f2"> 
+
+<input type="button" name="b1" value=" Send Json data " onclick="sendJSON();"> 
+
+<div id="serverResponse"></div>
+
+<input type="button" name="b2" value=" Get Json data " onclick="getJSON();"> 
+<div id="json_from_server"></div>
+</form>
+
+<script type="text/javascript">
+
+var package_data =  {};
+package_data.actoin = "";
+package_data.target = "booking";
+package_data.req_data = {};
+package_data.req_data.booking_date = "2015-11-12";
+package_data.req_data.booking_name = "张三";
+package_data.req_data.booking_doctor = "张医生";
+
+
+var xmlHttp;  
+  
+function createXMLHttpRequest() {  
+    if (window.ActiveXObject) {  
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");  
+    }   
+    else if (window.XMLHttpRequest) {  
+        xmlHttp = new XMLHttpRequest();  
+    }  
+}  
+//主函数入口  
+function sendJSON(){  
+    var obj = getReqObject();  
+    obj.package_data.action = "write";
+      
+    //使用JSON脚本库把JavaScript对象转换成Json字符串  
+    var carAsJSON = JSON.stringify(obj);  
+    console.log("Car object as JSON:\n " + carAsJSON);  
+      
+    var url = "do.php" ;  
+      
+    createXMLHttpRequest();  
+    xmlHttp.open("POST", url, true);  
+    xmlHttp.onreadystatechange = handleStateChange;  
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");      
+    xmlHttp.send(carAsJSON);  
+}  
+//状态改变处理函数  
+function handleStateChange() {  
+    if(xmlHttp.readyState == 4) {  
+        if(xmlHttp.status == 200) {  
+            parseResults();  
+        }  
+    }  
+}  
+//回调函数  
+function parseResults() {  
+    var responseDiv = document.getElementById("serverResponse");  
+    if(responseDiv.hasChildNodes()) {  
+        responseDiv.removeChild(responseDiv.childNodes[0]);  
+    }  
+      
+    var responseText = document.createTextNode(xmlHttp.responseText);  
+    responseDiv.appendChild(responseText);  
+}  
+//创建对象  
+function getReqObject() {  
+    return new ReqObj("RWJson", package_data, "abc");  
+}  
+//对象  
+function ReqObj(target_name, package_data, encrypt_key) {  
+    this.target_name = target_name;  
+    this.package_data = package_data;  
+    this.encrypt_key = encrypt_key;
+} 
+
+
+//主函数入口  
+function getJSON(){  
+    var obj = getReqObject(); 
+    obj.package_data.action = "read";
+      
+    //使用JSON脚本库把JavaScript对象转换成Json字符串  
+    var carAsJSON = JSON.stringify(obj);  
+    console.log("Car object as JSON:\n " + carAsJSON);  
+      
+    var url = "do.php";  
+      
+    createXMLHttpRequest();  
+    xmlHttp.open("POST", url, true);  
+    xmlHttp.onreadystatechange = handleStateChange;  
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");      
+    xmlHttp.send(carAsJSON);  
+}   
+
+
+</script>
+
+
+
+</body></html>
