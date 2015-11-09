@@ -1,49 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css" />
-    <script src="common.js" ></script>
 
-    <script type="text/javascript">
-
-        function send() {
-            var req_data =  {};
-            req_data.action = "write";
-            req_data.target = "ingest";
-            req_data.field_data = {};
-
-            var temp_obj = makePackage(req_data);
-
-            sendJSON(temp_obj, parseResults );
-
-        }
-
-        function send2() {
-            var req_data =  {};
-            req_data.action = "read";
-            req_data.target = "ingest";
-            req_data.field_data = {};
-
-            var temp_obj = makePackage(req_data);
-
-            sendJSON(temp_obj, parseResults );
-        }
-
-
-
-        function parseResults( resText ) {
-            var responseDiv = document.getElementById("serverResponse");
-            if(responseDiv.hasChildNodes()) {
-                responseDiv.removeChild(responseDiv.childNodes[0]);
-            }
-
-            var responseText = document.createTextNode(resText);
-            responseDiv.appendChild(responseText);
-        }
-
-
-    </script>
 </head>
 
 <body>
@@ -57,7 +17,58 @@
 </form>
 
 
+<script src="common.js" ></script>
 
+<script type="text/javascript">
+
+    function send() {
+        var req_data =  {};
+        req_data.action = "write";
+        req_data.target = "ingest";
+        req_data.field_data = {};
+        req_data.field_data.foods = [];
+        var food = Food("可乐", "100ml", "43");
+        req_data.field_data.foods.push(food);
+        var food = Food("汉堡", "个", "260");
+        req_data.field_data.foods.push(food);
+
+        var temp_obj = makePackage(req_data);
+
+        sendJSON(temp_obj, parseResults );
+
+    }
+
+    function send2() {
+        var req_data =  {};
+        req_data.action = "read";
+        req_data.target = "ingest";
+        req_data.field_data = {};
+
+        var temp_obj = makePackage(req_data);
+
+        sendJSON(temp_obj, parseResults );
+    }
+
+    function parseResults( resText ) {
+        var responseDiv = document.getElementById("serverResponse");
+        if(responseDiv.hasChildNodes()) {
+            responseDiv.removeChild(responseDiv.childNodes[0]);
+        }
+
+        var responseText = document.createTextNode(resText);
+        responseDiv.appendChild(responseText);
+    }
+
+    function Food(name, count ,calories){
+        var food = {};
+        food.name = name;
+        food.count = count;
+        food.calories = calories;
+        return food;
+    }
+
+
+</script>
 
 
 </body></html>
