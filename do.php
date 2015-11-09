@@ -26,7 +26,7 @@
 		fwrite($myfile, $json_req);
 		
 		fclose($myfile);
-		echo var_dump("Write Success."); 
+		echo var_dump("Write JSON Success."); 
     }
     elseif(strcmp("read", $action ) == 0 ){
     	$filename2 = "data/" . $target . ".json";

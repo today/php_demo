@@ -5,20 +5,19 @@
 
 <body>
 <form action="post.php" method="post" name="f1"> 
-<input type="text" name="user"> 
-<input type="password" name="password"> 
-<input type="submit"> 
+<input type="hidden" name="user"> 
+<input type="hidden" name="password"> 
+<input type="hidden"> 
 </form> 
 
 
 <form action="do.php" method="post" name="f2"> 
-
+<div id="serverResponse" style="border: 2px solid #73AD21;"><br></div>
+<br>
 <input type="button" name="b1" value=" Send Json data " onclick="sendJSON();"> 
 
-<div id="serverResponse"></div>
-
 <input type="button" name="b2" value=" Get Json data " onclick="getJSON();"> 
-<div id="json_from_server"></div>
+
 </form>
 
 <script type="text/javascript">
